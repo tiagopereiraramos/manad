@@ -15,6 +15,28 @@ class RegistroK150:
     desc_rubrica: str
 
 class MANADProcessor:
+    """A class for processing MANAD (Manual Normativo de Arquivos Digitais) files.
+    This class handles the loading, parsing and processing of MANAD files, specifically
+    focusing on K150 (rubric descriptions) and K300 (rubric entries) records.
+    Attributes:
+        file_path (str): Path to the MANAD file to be processed
+        k300_data (List[RegistroK300]): List containing all K300 records
+        k150_data (Dict[str, str]): Dictionary mapping rubric codes to their descriptions
+    Methods:
+        load_data(): Loads data from the MANAD file and stores K150 and K300 records
+        parse_line(line: str): Identifies and processes each line according to its record type
+        parse_k300(line: str) -> RegistroK300: Processes K300 records (rubric entries)
+        parse_k150(line: str) -> RegistroK150: Processes K150 records (rubric descriptions)
+        process_data() -> Tuple[pd.DataFrame, pd.DataFrame]: Consolidates and processes the data
+        gerar_relatorio_formatado(df_bruto, agrupado, descricoes_rubricas, arquivo_saida): 
+            Generates a formatted Excel report with sorted rubrics and associated descriptions
+    Example:
+        processor = MANADProcessor("path/to/manad/file.txt")
+        processor.load_data()
+        df_bruto, agrupado = processor.process_data()
+        processor.gerar_relatorio_formatado(df_bruto, agrupado, 
+                                          processor.k150_data, "output.xlsx")
+"""                                          
     def __init__(self, file_path: str):
         self.file_path = file_path
         self.k300_data: List[RegistroK300] = []
